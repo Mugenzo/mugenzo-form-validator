@@ -1,4 +1,4 @@
-exports.validator = {
+module.exports = {
     settings: {
         min: undefined,
         max: undefined,
@@ -7,51 +7,55 @@ exports.validator = {
         errorClass: undefined
     },
     validateInput: (el) => {
+        if (typeof el !== 'HTMLElement') {
+            return `Переданный елемент не является частью DOM дерева!`;
+        }
+
         let
             inputOptions = Object.assign({
-                _fieldName = el.getAttribute('data-name'),
+                _fieldName: el.getAttribute('data-name'),
                 /**
                  * определяем тип валидируемого поля
                  * @type {number}
                  * @private
                  */
-                _type = el.getAttribute('type'),
+                _type: el.getAttribute('type'),
                 /**
                  * число минимальных символов в строке
                  * @type {number}
                  * @private
                  */
-                _min = el.getAttribute('min'),
+                _min: el.getAttribute('min'),
                 /**
                  * число максимальных символов в строке
                  * @type {number}
                  * @private
                  */
-                _max = el.getAttribute('max'),
+                _max: el.getAttribute('max'),
                 /**
                  * строка для сравнения
                  * @type {string}
                  * @private
                  */
-                _pattern = el.getAttribute('data-pattern'),
+                _pattern: el.getAttribute('data-pattern'),
                 /**
                  * значение в инпуте
                  * @type {string}
                  * @private
                  */
-                _val = el.value,
+                _val: el.value,
                 /**
                  * длинна значения в инпуте
                  * @type {string}
                  * @private
                  */
-                _valLength = _val.length,
+                _valLength: _val.length,
                 /**
                  * класс для поиска wrapper на который вешается invalid при валидации
                  * @type {string}
                  * @private
                  */
-                _wrapper = el.getAttribute('val-class'),
+                _wrapper: el.getAttribute('val-class'),
             }, this.settings),
             /**
              * обьект ответа
